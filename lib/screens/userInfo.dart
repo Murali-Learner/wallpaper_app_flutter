@@ -3,8 +3,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:wallpaper_app/screens/homeScreen.dart';
 import 'package:wallpaper_app/screens/methds/firestoreData.dart';
 import 'package:wallpaper_app/screens/methds/google.dart';
+import 'package:wallpaper_app/screens/sharedPrefs.dart';
 
 class UserScreen extends StatefulWidget {
   String userID;
@@ -38,7 +41,32 @@ class _UserScreenState extends State<UserScreen> {
         centerTitle: true,
         title: Text("User", style: TextStyle(fontSize: 25)),
         actions: [
-          IconButton(onPressed: () async {}, icon: Icon(Icons.logout_rounded))
+          IconButton(
+              onPressed: () async {
+                GoogleSignIn _googleSignIn = GoogleSignIn();
+                bool _isSigned = await _googleSignIn.isSignedIn();
+
+                print(_isSigned);
+
+                if (_isSigned) {
+                  SharedPrefs.init().then((value) {
+                    value.clear();
+                    print(value);
+                  });
+                  await _googleSignIn.signOut();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return HomeScreen();
+                      },
+                    ),
+                  );
+                } else {
+                  print("user login");
+                }
+              },
+              icon: Icon(Icons.logout_rounded))
         ],
       ),
       body: Container(

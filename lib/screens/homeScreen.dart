@@ -60,11 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.black38,
       appBar: AppBar(
         actions: [
-          // Container(
-          //     decoration:
-          //         BoxDecoration(borderRadius: BorderRadius.circular(10)),
-          //     child:
-          //         Image(image: NetworkImage(GoogleClass.photoId, scale: 0.5))),
           userID == ""
               ? IconButton(
                   padding: EdgeInsets.only(right: 10),
@@ -73,13 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       _isLoading = true;
                     });
 
-                    // if (userData == null) {
                     var response = await GoogleClass.signInGoogle();
                     print(response);
-                    // var isExisted =
-                    //     await FirestoreData.isTokenExists(response["uid"]);
-                    // print(isExisted);
-                    // if (!isExisted) {
+
                     await FirestoreData.addUserData(
                       response["email"],
                       response["uid"],
