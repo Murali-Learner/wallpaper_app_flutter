@@ -21,7 +21,6 @@ class UserScreen extends StatefulWidget {
 class _UserScreenState extends State<UserScreen> {
   static var response = GoogleClass.signInGoogle();
 
-  @override
   var userId;
   void initState() {
     print(widget.userID);
@@ -33,7 +32,7 @@ class _UserScreenState extends State<UserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool themeDark = false;
+    bool themeDark = true;
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -44,27 +43,23 @@ class _UserScreenState extends State<UserScreen> {
           IconButton(
               onPressed: () async {
                 GoogleSignIn _googleSignIn = GoogleSignIn();
-                bool _isSigned = await _googleSignIn.isSignedIn();
+                // bool _isSigned = await _googleSignIn.isSignedIn();
 
-                print(_isSigned);
+                setState(() {
+                  SharedPrefs.preferences.clear();
+                });
 
-                if (_isSigned) {
-                  SharedPrefs.init().then((value) {
-                    value.clear();
-                    print(value);
-                  });
-                  await _googleSignIn.signOut();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return HomeScreen();
-                      },
-                    ),
-                  );
-                } else {
-                  print("user login");
-                }
+                await _googleSignIn.signOut();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return HomeScreen();
+                    },
+                  ),
+                );
+
+                // }
               },
               icon: Icon(Icons.logout_rounded))
         ],
@@ -152,72 +147,3 @@ class _UserScreenState extends State<UserScreen> {
     );
   }
 }
-
-//  body: Container(
-//         child: Column(
-//           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [
-//             Container(
-//               padding: EdgeInsets.only(
-//                 top: _height * 0.1,
-//               ),
-//               alignment: Alignment.topCenter,
-//               child: CircleAvatar(
-//                 radius: 70,
-//               ),
-//             ),
-//             SizedBox(
-//               height: _height * 0.04,
-//             ),
-//             Container(
-//               child: Text(
-//                 "username",
-//                 style: TextStyle(color: Colors.black, fontSize: 30),
-//               ),
-//             ),
-//             SizedBox(
-//               height: _height * 0.04,
-//             ),
-//             Container(
-//               width: _width,
-//               decoration: BoxDecoration(
-//                   color: Colors.black26,
-//                   borderRadius: BorderRadius.circular(10)),
-//               padding: EdgeInsets.only(left: 20, right: 20),
-//               child: TextButton(
-//                 onPressed: () {
-//                   print("textbutton");
-//                 },
-//                 child: Text(
-//                   "Favourites",
-//                   style: TextStyle(color: Colors.white),
-//                 ),
-//               ),
-//             ),
-//             SizedBox(
-//               height: _height * 0.04,
-//             ),
-//             Container(
-//               decoration: BoxDecoration(
-//                   color: Colors.black26,
-//                   borderRadius: BorderRadius.circular(10)),
-//               padding: EdgeInsets.only(left: 20, right: 20),
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   Text(
-//                     "Theme",
-//                     style: TextStyle(color: Colors.white),
-//                   ),
-//                   IconButton(
-//                       onPressed: () {},
-//                       icon: Icon(
-//                         themeDark ? Icons.dark_mode : Icons.light_mode_outlined,
-//                         color: Colors.white,
-//                       ))
-//                 ],
-//               ),
-//             )
-//           ],
-//         ),
-//       ),

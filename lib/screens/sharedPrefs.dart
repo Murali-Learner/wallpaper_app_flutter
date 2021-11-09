@@ -2,15 +2,15 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefs {
-  static SharedPreferences _preferences;
+  static SharedPreferences preferences;
 
   static Future init() async {
-    _preferences = await SharedPreferences.getInstance();
+    preferences = await SharedPreferences.getInstance();
   }
 
   static setIdData(userId) async {
     String user = userId;
-    _preferences.setString("uId", user);
+    preferences.setString("uId", user);
     print("data: $user");
   }
 
@@ -20,7 +20,7 @@ class SharedPrefs {
   // }
 
   static getData() async {
-    String user = _preferences.getString("uId");
+    String user = preferences.getString("uId");
     print("userData: $user");
     if (user == null) {
       return null;

@@ -6,6 +6,7 @@ import 'package:wallpaper_app/screens/homeScreen.dart';
 import 'package:wallpaper_app/screens/methds/firestoreData.dart';
 import 'package:wallpaper_app/screens/methds/google.dart';
 import 'package:wallpaper_app/screens/sharedPrefs.dart';
+import 'package:wallpaper_app/screens/wallpaperScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -45,11 +46,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     print(isExisted);
                     if (!isExisted) {
                       FirestoreData.addUserData(
-                        response["email"],
-                        response["uid"],
-                        response["name"],
-                        response["photoUrl"],
-                      );
+                          response["email"],
+                          response["uid"],
+                          response["name"],
+                          response["photoUrl"],
+                          favList);
                     }
 
                     // print(response["name"]);

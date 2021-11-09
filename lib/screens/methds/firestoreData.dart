@@ -9,12 +9,7 @@ class FirestoreData {
   static final uidKey = "userId";
   static final namekey = "displayName";
   static final photokey = "photoUrl";
-
-  static Future<QuerySnapshot> readUser() async {
-    QuerySnapshot userList = await userCollection.get();
-
-    return userList;
-  }
+  static final favouritiesKey = "favouritiesList";
 
   static Future<DocumentSnapshot> getUserData(userID) async {
     var response = await userCollection.doc(userID).get();
@@ -22,18 +17,48 @@ class FirestoreData {
     return response;
   }
 
-  static Future addUserData(email, userId, displayName, photoUrl) async {
+  static Future addUserData(
+      email, userId, displayName, photoUrl, favlist) async {
     userCollection.doc(userId).set(({
           emailKey: email,
           namekey: displayName,
           uidKey: userId,
-          "favouritiesList": [],
           photokey: photoUrl,
+          favouritiesKey: favlist,
         }));
   }
 
   static Future<bool> isTokenExists(String userID) async {
     var response = await userCollection.doc(userID).get();
     return response.exists;
+  }
+
+  static Future<bool> getFav(String docId, String url) async {
+    var imageCol = await userCollection.doc(docId).get();
+    List imageList = imageCol["favouritiesList"];
+    return imageList.contains(url);
+  }
+
+  static Future<List> getFavList(String docId, String url) async {
+    var imageCol = await userCollection.doc(docId).get();
+    List imageList = imageCol["favouritiesList"];
+    return imageList;
+  }
+
+  static Future addFavList(List favList, String docId, String url) async {
+    var collection = userCollection.doc(docId);
+    var docSnap = await collection.get();
+    List listUrls = docSnap.get("favouritiesList");
+    if (listUrls.contains(url)) {
+      collection.update({
+        "favouritiesList": FieldValue.arrayRemove([url])
+      });
+    } else {
+      collection.update({
+        "favouritiesList": FieldValue.arrayUnion([url])
+      });
+    }
+    getFav(docId, url).then((value) => print(value));
+    // return imageList["favouritiesList"];
   }
 }

@@ -14,6 +14,7 @@ import 'package:wallpaper_app/screens/sharedPrefs.dart';
 import 'package:wallpaper_app/screens/userInfo.dart';
 import 'package:wallpaper_app/screens/wallpaperScreen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:wallpaper_app/screens/wallpaperScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -47,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "Nature": "images/nature.jpeg",
       "Technology": "images/technology.jpeg",
       "Beach": "images/beach.jpeg",
-      "Birds": "images/bird.jpeg",
+      "city": "images/city.jpeg",
       "Cars": "images/cars.jpeg",
       "Books": "images/books.jpeg",
       "Love": "images/love.jpeg",
@@ -69,13 +70,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
 
                     var response = await GoogleClass.signInGoogle();
-                    print(response);
+                    print(
+                      favList,
+                    );
 
                     await FirestoreData.addUserData(
                       response["email"],
                       response["uid"],
                       response["name"],
                       response["photoUrl"],
+                      favList, //this favList is in the wallpaperscreen
                     );
                     // }
                     SharedPrefs.setIdData(response["uid"]);
