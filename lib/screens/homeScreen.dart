@@ -5,6 +5,8 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wallpaper_app/screens/login.dart';
@@ -45,8 +47,8 @@ class _HomeScreenState extends State<HomeScreen> {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     Map<String, String> categories = {
-      "Nature": "images/nature.jpeg",
-      "Technology": "images/technology.jpeg",
+      "Nature": "images/nature1.jpeg",
+      "Technology": "images/tech1.jpeg",
       "Beach": "images/beach.jpeg",
       "city": "images/city.jpeg",
       "Cars": "images/cars.jpeg",
@@ -79,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       response["uid"],
                       response["name"],
                       response["photoUrl"],
-                      favList, //this favList is in the wallpaperscreen
+                      //this favList is in the wallpaperscreen
                     );
                     // }
                     SharedPrefs.setIdData(response["uid"]);
@@ -130,7 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Color.fromRGBO(27, 25, 50, 1),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        title: Text('Categories'),
+        title: Text(
+          'Categories',
+          style: GoogleFonts.sourceSansPro(
+              fontSize: 30, fontWeight: FontWeight.w600),
+        ),
       ),
       body: ModalProgressHUD(
         inAsyncCall: _isLoading,
@@ -144,7 +150,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     GestureDetector(
                       child: Container(
-                        // padding: EdgeInsets.all(20),
                         child: GridView.builder(
                             itemCount: categories.keys.length,
                             gridDelegate:
@@ -152,7 +157,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     crossAxisCount: 2),
                             itemBuilder: (context, index) {
                               return Container(
-                                padding: EdgeInsets.only(bottom: 10, right: 10),
+                                padding: EdgeInsets.only(
+                                  bottom: 7,
+                                  right: 8,
+                                ),
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.push(context, MaterialPageRoute(
@@ -179,15 +187,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       child: BackdropFilter(
                                           filter: ImageFilter.blur(
-                                            sigmaX: 1.2,
-                                            sigmaY: 1.3,
+                                            sigmaX: 1.5,
+                                            sigmaY: 1.5,
                                             tileMode: TileMode.clamp,
                                           ),
                                           child: Text(
                                             categories.keys.elementAt(index),
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontSize: 40,
+                                            style: GoogleFonts.donegalOne(
+                                                fontSize: 35,
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w500),
                                           )),

@@ -7,21 +7,20 @@ import 'package:wallpaper_app/screens/homeScreen.dart';
 import 'package:wallpaper_app/screens/login.dart';
 import 'package:wallpaper_app/screens/sharedPrefs.dart';
 
-main() async {
+// var userData;
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SharedPrefs.init();
+  await SharedPrefs.init();
   await Firebase.initializeApp();
-  var userData = SharedPrefs.getData();
 
-  // print("userDataMain:$userData");
-  // runApp(MyApp());
+  SharedPrefs.getData();
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // var userData = SharedPrefs.getData();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomeScreen(),

@@ -9,7 +9,6 @@ class FirestoreData {
   static final uidKey = "userId";
   static final namekey = "displayName";
   static final photokey = "photoUrl";
-  static final favouritiesKey = "favouritiesList";
 
   static Future<DocumentSnapshot> getUserData(userID) async {
     var response = await userCollection.doc(userID).get();
@@ -18,13 +17,17 @@ class FirestoreData {
   }
 
   static Future addUserData(
-      email, userId, displayName, photoUrl, favlist) async {
+    email,
+    userId,
+    displayName,
+    photoUrl,
+  ) async {
     userCollection.doc(userId).set(({
           emailKey: email,
           namekey: displayName,
+          "favouritiesList": [],
           uidKey: userId,
           photokey: photoUrl,
-          favouritiesKey: favlist,
         }));
   }
 
@@ -39,7 +42,7 @@ class FirestoreData {
     return imageList.contains(url);
   }
 
-  static Future<List> getFavList(String docId, String url) async {
+  static Future<List> getFavList(String docId) async {
     var imageCol = await userCollection.doc(docId).get();
     List imageList = imageCol["favouritiesList"];
     return imageList;
