@@ -5,13 +5,14 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wallpaper_app/methds/firestoreData.dart';
+import 'package:wallpaper_app/methds/google.dart';
 import 'package:wallpaper_app/screens/login.dart';
-import 'package:wallpaper_app/screens/methds/firestoreData.dart';
-import 'package:wallpaper_app/screens/methds/google.dart';
+
 import 'package:wallpaper_app/screens/sharedPrefs.dart';
 import 'package:wallpaper_app/screens/userInfo.dart';
 import 'package:wallpaper_app/screens/wallpaperScreen.dart';
@@ -72,18 +73,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
 
                     var response = await GoogleClass.signInGoogle();
-                    print(
-                      favList,
-                    );
 
                     await FirestoreData.addUserData(
                       response["email"],
                       response["uid"],
                       response["name"],
                       response["photoUrl"],
-                      //this favList is in the wallpaperscreen
                     );
-                    // }
+
                     SharedPrefs.setIdData(response["uid"]);
                     setState(() {
                       _isLoading = false;
@@ -105,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   future: FirestoreData.getUserData(userID),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
+                      print(_height);
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(
@@ -144,13 +142,15 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Container(
-                height: _height * 0.89,
+                height: _height * 0.88,
                 width: _width,
                 child: Stack(
                   children: [
                     GestureDetector(
                       child: Container(
+                        // padding: EdgeInsets.all(20),
                         child: GridView.builder(
+                            reverse: false,
                             itemCount: categories.keys.length,
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(

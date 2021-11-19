@@ -3,14 +3,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:wallpaper_app/methds/firestoreData.dart';
+import 'package:wallpaper_app/methds/google.dart';
+import 'package:wallpaper_app/methds/showtoast.dart';
 import 'package:wallpaper_app/screens/favimages.dart';
 import 'package:wallpaper_app/screens/homeScreen.dart';
-import 'package:wallpaper_app/screens/methds/firestoreData.dart';
-import 'package:wallpaper_app/screens/methds/google.dart';
-import 'package:wallpaper_app/screens/methds/showtoast.dart';
+
 import 'package:wallpaper_app/screens/sharedPrefs.dart';
 import 'package:wallpaper_app/screens/wallpaperScreen.dart';
 

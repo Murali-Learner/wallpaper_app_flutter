@@ -13,9 +13,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:wallpaper_app/screens/methds/firestoreData.dart';
-import 'package:wallpaper_app/screens/methds/showtoast.dart';
-import 'package:wallpaper_app/screens/methds/unsplashApi.dart';
+import 'package:wallpaper_app/methds/firestoreData.dart';
+import 'package:wallpaper_app/methds/showtoast.dart';
+import 'package:wallpaper_app/methds/unsplashApi.dart';
 import 'package:wallpaper_app/screens/sharedPrefs.dart';
 import 'package:http/http.dart' as http;
 
@@ -73,6 +73,7 @@ class _WallpaperState extends State<Wallpaper> {
                     ? Swiper(
                         itemCount: wallPaperList.length,
                         itemBuilder: (context, index) {
+                          print(wallPaperList[index]['url']);
                           return Stack(
                             children: [
                               GestureDetector(
@@ -110,9 +111,7 @@ class _WallpaperState extends State<Wallpaper> {
                           );
                         },
                       )
-                    : Center(
-                        child: CircularProgressIndicator(),
-                      ),
+                    : Center(child: CircularProgressIndicator()),
               )
             ],
           ),
@@ -133,12 +132,12 @@ class _WallpaperState extends State<Wallpaper> {
   http.Response response;
 
   List wallpaperOpt = [
-    {"HOME SCREEN": 1},
-    {"LOCK SCREEN": 2},
-    {"BOTH SCREENS": 3},
-  ].toList();
+    {"key": "HOME SCREEN", "value": 1},
+    {"key": "LOCK SCREEN", "value": 2},
+    {"key": "BOTH SCREEN", "value": 3},
+  ];
   void _setWallPapaer(String url, wallpaperLoc) async {
-    int location = WallpaperManager.HOME_SCREEN;
+    // int location = wallpaperLoc;
     setState(() {
       _loading = true;
     });
@@ -160,7 +159,7 @@ class _WallpaperState extends State<Wallpaper> {
           print("WallPaper Saved");
           showToast("WallPaper Saved");
 
-          await WallpaperManager.setWallpaperFromFile(file.path, location)
+          await WallpaperManager.setWallpaperFromFile(file.path, wallpaperLoc)
               .then((_isSet) {
             if (_isSet) {
               showToast("WallPaper Set");
@@ -182,7 +181,7 @@ class _WallpaperState extends State<Wallpaper> {
           (value) async {
             showToast("WallPaper Saved");
             print("WallPaper Saved");
-            await WallpaperManager.setWallpaperFromFile(file.path, location)
+            await WallpaperManager.setWallpaperFromFile(file.path, wallpaperLoc)
                 .then(
               (bool _isSet) {
                 if (_isSet) {
@@ -263,15 +262,14 @@ class _WallpaperState extends State<Wallpaper> {
                                         ),
                                         TextButton(
                                           onPressed: () async {
-                                            print(wallpaperOpt[index]
-                                                .values
-                                                .toString());
+                                            print(wallpaperOpt[index]["value"]);
                                             _setWallPapaer(url,
-                                                wallpaperOpt[index].values);
+                                                wallpaperOpt[index]["value"]);
                                             Navigator.pop(context);
                                           },
                                           child: Text(
-                                            wallpaperOpt[index].keys.toString(),
+                                            wallpaperOpt[index]["key"]
+                                                .toString(),
                                             style: GoogleFonts.robotoMono(
                                                 // fontSize: 2,
                                                 fontWeight: FontWeight.w500),

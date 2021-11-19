@@ -2,9 +2,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:wallpaper_app/methds/firestoreData.dart';
+import 'package:wallpaper_app/methds/google.dart';
 import 'package:wallpaper_app/screens/homeScreen.dart';
-import 'package:wallpaper_app/screens/methds/firestoreData.dart';
-import 'package:wallpaper_app/screens/methds/google.dart';
+
 import 'package:wallpaper_app/screens/sharedPrefs.dart';
 
 class LoginScreen extends StatefulWidget {

@@ -38,11 +38,9 @@ dependencies:
   google_fonts: ^2.1.0
   http: ^0.13.3
   flutter_wallpaper_manager: ^0.0.3
-  flutter_cache_manager: ^3.1.2
-  path_provider:
+  
   fluttertoast: ^8.0.8
-  flutter_spinkit: 4.1.2+1
-  shimmer: ^2.0.0
+
 
 dev_dependencies:
   flutter_test:
