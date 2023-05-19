@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 Future<List> apiResponse(query) async {
-  String apiKey = 'D0H1102ESxdfYd4MOO3lzccHeAuPIcfkqfzuivLLu_M';
+  String apiKey = 'your api key';
   var client = http.Client();
 
   try {
